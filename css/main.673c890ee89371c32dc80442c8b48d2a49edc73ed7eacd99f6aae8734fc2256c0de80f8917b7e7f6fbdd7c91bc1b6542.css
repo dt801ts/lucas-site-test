@@ -5,7 +5,7 @@
  * anchor, and medium gray as the interface register. This pass keeps the
  * lucasSite_05 homepage rhythm while refining headings, side-menu framing,
  * and previous/next navigation. lucasSite_30 added locally bundled open-source
- * webfonts; lucasSite_31 tunes local-font legibility and the backdrop lines; lucasSite_32 balances blockquote nested content; lucasSite_33 restores the lucasSite_30 title treatment and tightens search controls.
+ * webfonts; lucasSite_31 tunes local-font legibility and the backdrop lines; lucasSite_32 balances blockquote nested content; lucasSite_33 restores the lucasSite_30 title treatment and tightens search controls; lucasSite_40 adds deliberate article-table styling for balance and legibility.
  */
 @font-face {
     font-family: 'Lucas Figtree';
@@ -5854,5 +5854,495 @@ body {
 
     .site-menu__search-result-date {
         min-width: 3.5rem;
+    }
+}
+
+/* lucasSite_40: balanced, legible article tables.
+ * Keep Markdown tables inside the reading rhythm while giving data enough air:
+ * a modest width extension, quiet ruled structure, tabular numerals, and
+ * mobile-safe horizontal overflow without touching syntax-highlight tables.
+ */
+.single-content-body > table {
+    width: calc(100% + 1rem);
+    margin: 2.05rem 0 2.35rem -.5rem;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(.86rem, .82rem + .12vw, .92rem);
+    line-height: 1.48;
+    color: var(--color-ink);
+    background: rgba(242, 239, 232, .48);
+    border-top: 1px solid var(--color-rule-strong);
+    border-bottom: 1px solid var(--color-rule);
+    box-shadow: 0 1px 0 rgba(32, 35, 38, .035);
+    font-variant-numeric: tabular-nums;
+}
+
+.single-content-body > table caption {
+    caption-side: bottom;
+    padding: .58rem .5rem 0;
+    font-family: var(--font-meta);
+    font-size: .72rem;
+    line-height: 1.45;
+    letter-spacing: .035em;
+    color: var(--color-muted);
+    text-align: left;
+}
+
+.single-content-body > table th,
+.single-content-body > table td {
+    padding: .68rem .82rem .64rem;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(146, 138, 128, .32);
+}
+
+.single-content-body > table th + th,
+.single-content-body > table td + td {
+    border-left: 1px solid rgba(146, 138, 128, .18);
+}
+
+.single-content-body > table thead th {
+    padding-top: .58rem;
+    padding-bottom: .52rem;
+    font-family: var(--font-meta);
+    font-size: .68rem;
+    font-weight: 600;
+    line-height: 1.24;
+    letter-spacing: .075em;
+    text-transform: uppercase;
+    color: var(--color-medium-gray);
+    background: rgba(210, 205, 194, .36);
+    border-bottom: 1px solid var(--color-rule-strong);
+}
+
+.single-content-body > table tbody tr:nth-child(even) td {
+    background: rgba(255, 255, 255, .15);
+}
+
+.single-content-body > table tbody tr:hover td {
+    background: rgba(147, 65, 45, .055);
+}
+
+.single-content-body > table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.single-content-body > table th:first-child,
+.single-content-body > table td:first-child {
+    padding-left: .95rem;
+}
+
+.single-content-body > table th:last-child,
+.single-content-body > table td:last-child {
+    padding-right: .95rem;
+}
+
+.single-content-body > table td:first-child {
+    font-weight: 500;
+    color: var(--color-charcoal);
+}
+
+.single-content-body > table th[style*="text-align: right"],
+.single-content-body > table td[style*="text-align: right"] {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.single-content-body > table code {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 48rem) {
+    .single-content-body > table {
+        display: block;
+        width: calc(100% + 1rem);
+        max-width: calc(100vw - 1rem);
+        margin: 1.8rem 0 2.05rem -.5rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: .82rem;
+    }
+
+    .single-content-body > table th,
+    .single-content-body > table td {
+        padding: .56rem .66rem .54rem;
+    }
+
+    .single-content-body > table th:first-child,
+    .single-content-body > table td:first-child {
+        padding-left: .72rem;
+    }
+
+    .single-content-body > table th:last-child,
+    .single-content-body > table td:last-child {
+        padding-right: .72rem;
+    }
+}
+
+/* lucasSite_41: use arrows semantically in menus and post lists.
+ * Internal navigation gets a straight arrow; RSS remains an external-context
+ * northeast arrow and opens in a new tab; mail and PGP links avoid decorative
+ * external arrows; PGP uses a rust download icon.
+ */
+.post-list__marker {
+    color: var(--color-rust-bright);
+    opacity: .9;
+}
+
+.site-menu__about-link::after,
+.site-menu__secure-contact-link::after,
+.site-menu__search-result::after {
+    content: "→";
+    color: var(--color-rust-bright);
+    opacity: .92;
+}
+
+.site-menu__rss-link::after {
+    content: "↗";
+    color: var(--color-rust-bright);
+    opacity: .92;
+}
+
+.site-menu__contact-link::after,
+.site-menu__pgp-key-link::after,
+.secure-contact-card__pgp-key-link::after {
+    content: none !important;
+    display: none !important;
+}
+
+.pgp-key-link__download-icon {
+    flex: 0 0 auto;
+    width: 1.02em;
+    height: 1.02em;
+    color: var(--color-rust-bright);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.85;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    opacity: .94;
+}
+
+.site-menu .site-menu__key-icon.pgp-key-link__download-icon,
+.single-wrap .secure-contact-card__key-icon.pgp-key-link__download-icon {
+    width: 1.02em;
+    height: 1.02em;
+    opacity: .94;
+    filter: none;
+}
+
+.site-menu__pgp-key-link:hover .pgp-key-link__download-icon,
+.site-menu__pgp-key-link:focus-visible .pgp-key-link__download-icon,
+.secure-contact-card__pgp-key-link:hover .pgp-key-link__download-icon,
+.secure-contact-card__pgp-key-link:focus-visible .pgp-key-link__download-icon {
+    color: var(--color-rust-bright);
+    opacity: 1;
+}
+
+/* lucasSite_41: specificity-safe final arrow assignments. */
+.site-menu .site-menu__about-link::after,
+.site-menu nav ul li a.site-menu__secure-contact-link::after,
+.site-menu .site-menu__search-result::after {
+    content: "→";
+    color: var(--color-rust-bright);
+    opacity: .92;
+}
+
+.site-menu nav ul li a.site-menu__rss-link::after {
+    content: "↗";
+    color: var(--color-rust-bright);
+    opacity: .92;
+}
+
+.site-menu nav ul li a.site-menu__contact-link::after,
+.site-menu nav ul li a.site-menu__pgp-key-link::after {
+    content: none !important;
+    display: none !important;
+}
+
+.post-list__link:hover .post-list__marker,
+.post-list__link:focus-visible .post-list__marker {
+    color: var(--color-rust-bright);
+    opacity: 1;
+}
+
+
+/* lucasSite_42: restore About portrait and align dedicated Search page with article pages.
+ * The Search page now follows the About/Secure Contact shell: left-set title,
+ * same reading measure, same quiet page rhythm, with the form/results inside
+ * the normal body column rather than a centered feature block.
+ */
+.single-wrap.search-page h1.page-title {
+    max-width: var(--lucas-reading);
+    margin: 0 0 1.25em clamp(0rem, 7vw, 7rem);
+    text-align: left;
+}
+
+.search-page__body {
+    max-width: var(--lucas-reading);
+    margin-left: clamp(0rem, 7vw, 7rem);
+    margin-right: 0;
+    font-size: 1.02em;
+}
+
+.search-page__form {
+    margin-top: 0;
+}
+
+.search-page__results {
+    margin-top: 1.65em;
+}
+
+.about-page .about-page__portrait {
+    float: right;
+    width: min(38%, 14rem);
+    margin: 0.25em 0 1.25em 1.5em;
+}
+
+.about-page .about-page__portrait img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media screen and (max-width: 48rem) {
+    .single-wrap.search-page h1.page-title,
+    .search-page__body {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .about-page .about-page__portrait {
+        float: none;
+        width: 100%;
+        margin: 1.8em 0;
+    }
+}
+
+/* lucasSite_43: dedicated Search page treatment.
+ * Search is a utility page, not a prose page: use the full shell on desktop,
+ * give guidance its own rail, and keep results broad, scannable, and calm.
+ * This deliberately does not alter the normal post reading measure.
+ */
+.single-wrap.search-page {
+    max-width: var(--lucas-shell);
+}
+
+.single-wrap.search-page .single-content {
+    max-width: var(--lucas-shell);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.single-wrap.search-page h1.page-title {
+    max-width: none;
+    margin: 0 0 1.05rem;
+    text-align: left;
+}
+
+.search-page__body {
+    display: grid;
+    grid-template-columns: minmax(13rem, .72fr) minmax(0, 1.72fr);
+    align-items: start;
+    gap: clamp(1.65rem, 4.6vw, 4.8rem);
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 1em;
+}
+
+.search-page__intro {
+    position: sticky;
+    top: 5.8rem;
+    margin: 0;
+    padding-top: .15rem;
+    color: var(--color-medium-gray);
+}
+
+.search-page__intro p {
+    margin: 0;
+    font-size: .94rem;
+    line-height: 1.62;
+}
+
+.search-page__intro p + p {
+    margin-top: .78rem;
+}
+
+.search-page__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: .42rem;
+    margin-bottom: .95rem !important;
+    font-family: var(--font-meta);
+    font-size: .7rem !important;
+    font-weight: 600;
+    line-height: 1.2 !important;
+    letter-spacing: .085em;
+    text-transform: uppercase;
+    color: var(--color-accent) !important;
+}
+
+.search-page__kicker::before {
+    content: "";
+    display: inline-block;
+    width: 2.65rem;
+    height: 2px;
+    background: var(--color-accent);
+}
+
+.search-page__hint {
+    max-width: 18rem;
+    padding-top: .9rem;
+    color: var(--color-muted);
+    border-top: var(--lucas-hairline);
+}
+
+.search-page__panel {
+    min-width: 0;
+}
+
+.search-page__form {
+    margin: 0;
+}
+
+.search-page__input {
+    height: clamp(3rem, 5.2vw, 4rem);
+    padding: 0 clamp(.95rem, 2.2vw, 1.35rem);
+    font-family: var(--font-sans);
+    font-size: clamp(1.08rem, 1rem + .55vw, 1.46rem);
+    font-weight: 500;
+    letter-spacing: -.018em;
+    color: var(--color-charcoal);
+    background: var(--color-surface);
+    border: 1px solid var(--color-rule-strong);
+    border-left: 3px solid var(--color-accent);
+    box-shadow: inset 0 -1px 0 rgba(147, 65, 45, .12);
+}
+
+.search-page__input::placeholder {
+    color: rgba(83, 86, 84, .72);
+}
+
+.search-page__input:focus {
+    background: var(--color-surface);
+    border-color: var(--color-rule-strong);
+    border-left-color: var(--color-rust-bright);
+    box-shadow: inset 0 -2px 0 rgba(147, 65, 45, .28);
+}
+
+.search-page__status {
+    min-height: 1.3em;
+    margin: .88rem 0 1.15rem;
+    font-family: var(--font-meta);
+    font-size: .76rem;
+    font-weight: 500;
+    letter-spacing: .035em;
+    color: var(--color-accent);
+}
+
+.search-page__results {
+    display: grid;
+    gap: .72rem;
+    margin: .35rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.search-page__result {
+    position: relative;
+    margin: 0;
+    padding: 1rem 1.15rem 1.05rem 1.25rem;
+    background: rgba(246, 245, 241, .58);
+    border: 1px solid var(--color-rule);
+    border-left: 3px solid transparent;
+    transition: background-color .12s ease-in, border-color .12s ease-in;
+}
+
+.search-page__result + .search-page__result {
+    margin-top: 0;
+}
+
+.search-page__result:hover,
+.search-page__result:focus-within {
+    background: var(--color-accent-soft);
+    border-left-color: var(--color-accent);
+}
+
+.search-page__result-title {
+    margin: 0 0 .42rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.12rem, 1.02rem + .4vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.22;
+    letter-spacing: -.018em;
+}
+
+.search-page__result-title a {
+    color: var(--color-charcoal);
+    text-decoration: none;
+}
+
+.search-page__result-title a::after {
+    content: "→";
+    display: inline-block;
+    margin-left: .44em;
+    font-family: var(--font-meta);
+    font-size: .82em;
+    color: var(--color-rust-bright);
+    opacity: .68;
+    transform: translateY(-.02em);
+}
+
+.search-page__result-title a:hover,
+.search-page__result-title a:focus-visible {
+    color: var(--color-accent-hover);
+}
+
+.search-page__result-title a:hover::after,
+.search-page__result-title a:focus-visible::after {
+    opacity: 1;
+}
+
+.search-page__result-meta {
+    margin: 0 0 .6rem;
+    font-family: var(--font-meta);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .03em;
+    color: var(--color-accent);
+}
+
+.search-page__result-snippet {
+    max-width: 52rem;
+    margin: 0;
+    font-size: .97rem;
+    line-height: 1.62;
+    color: var(--color-ink);
+}
+
+@media screen and (max-width: 56rem) {
+    .single-wrap.search-page .single-content,
+    .single-wrap.search-page h1.page-title,
+    .search-page__body {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .search-page__body {
+        display: block;
+    }
+
+    .search-page__intro {
+        position: static;
+        margin-bottom: 1.35rem;
+        padding-bottom: 1.15rem;
+        border-bottom: var(--lucas-hairline);
+    }
+
+    .search-page__hint {
+        max-width: none;
     }
 }
